@@ -4,7 +4,6 @@ vim.g.mapleader = " "
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
--- if not vim.uv.fs_stat(lazypath) then -- This works in nvim 0.10, but not in 0.9.5
 if not vim.loop.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
@@ -21,6 +20,9 @@ require("lazy").setup({
     lazy = false,
     branch = "v2.5",
     import = "nvchad.plugins",
+    config = function()
+      require "options"
+    end,
   },
 
   { import = "plugins" },
@@ -30,7 +32,6 @@ require("lazy").setup({
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
-require "options"
 require "nvchad.autocmds"
 
 vim.schedule(function()
